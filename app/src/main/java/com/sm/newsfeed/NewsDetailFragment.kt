@@ -5,11 +5,9 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebViewClient
 import com.sm.newsfeed.dummy.DummyContent
 import kotlinx.android.synthetic.main.activity_news_detail.*
 import kotlinx.android.synthetic.main.news_detail.*
-import kotlinx.android.synthetic.main.news_detail.view.*
 
 /**
  * A fragment representing a single News detail screen.

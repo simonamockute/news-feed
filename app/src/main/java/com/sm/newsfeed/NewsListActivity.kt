@@ -4,16 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
-import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-
 import com.sm.newsfeed.dummy.DummyContent
 import kotlinx.android.synthetic.main.activity_news_list.*
-import kotlinx.android.synthetic.main.news_list_content.view.*
 import kotlinx.android.synthetic.main.news_list.*
+import kotlinx.android.synthetic.main.news_list_content.view.*
 
 /**
  * An activity representing a list of Pings. This activity

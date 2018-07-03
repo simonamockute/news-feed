@@ -5,8 +5,10 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebViewClient
 import com.sm.newsfeed.dummy.DummyContent
 import kotlinx.android.synthetic.main.activity_news_detail.*
+import kotlinx.android.synthetic.main.news_detail.*
 import kotlinx.android.synthetic.main.news_detail.view.*
 
 /**
@@ -40,14 +42,17 @@ class NewsDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.news_detail, container, false)
+        return inflater.inflate(R.layout.news_detail, container, false)
+    }
 
-        // Show the dummy content as text in a TextView.
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        news_detail.webViewClient = InnerWebViewClient()
+
         item?.let {
-            rootView.news_detail.text = it.details
+            news_detail.loadUrl("http://www.google.com")
         }
-
-        return rootView
     }
 
     companion object {

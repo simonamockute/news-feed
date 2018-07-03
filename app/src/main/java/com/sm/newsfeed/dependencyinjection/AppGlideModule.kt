@@ -1,4 +1,4 @@
-package com.sm.weatherapp.dependencyinjection
+package com.sm.newsfeed.dependencyinjection
 
 import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.module.AppGlideModule

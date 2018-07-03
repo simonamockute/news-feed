@@ -1,4 +1,4 @@
-package com.sm.weatherapp.dependencyinjection
+package com.sm.newsfeed.dependencyinjection
 
 import dagger.Component
 import javax.inject.Singleton

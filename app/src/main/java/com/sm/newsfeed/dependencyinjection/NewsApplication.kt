@@ -1,4 +1,4 @@
-package com.sm.weatherapp.dependencyinjection
+package com.sm.newsfeed.dependencyinjection
 
 import android.app.Application
 import javax.inject.Inject

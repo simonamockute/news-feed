@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebViewClient
 import com.sm.newsfeed.R
 import com.sm.newsfeed.dummy.DummyContent
 import kotlinx.android.synthetic.main.activity_news_detail.*
@@ -47,7 +48,7 @@ class NewsDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        news_detail.webViewClient = InnerWebViewClient()
+        news_detail.webViewClient = WebViewClient()
 
         item?.let {
             news_detail.loadUrl("http://www.google.com")

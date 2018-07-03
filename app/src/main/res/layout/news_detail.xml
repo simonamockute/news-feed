@@ -7,4 +7,4 @@
     android:padding="16dp"
     android:textIsSelectable="true"
     android:visibility="visible"
-    tools:context=".NewsDetailFragment" />
+    tools:context=".ui.NewsDetailFragment" />

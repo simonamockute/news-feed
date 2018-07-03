@@ -1,4 +1,4 @@
-package com.sm.newsfeed
+package com.sm.newsfeed.ui
 
 import android.webkit.WebViewClient
 

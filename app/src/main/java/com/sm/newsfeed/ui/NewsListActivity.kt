@@ -1,4 +1,4 @@
-package com.sm.newsfeed
+package com.sm.newsfeed.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.sm.newsfeed.R
 import com.sm.newsfeed.dummy.DummyContent
 import kotlinx.android.synthetic.main.activity_news_list.*
 import kotlinx.android.synthetic.main.news_list.*
@@ -48,7 +49,11 @@ class NewsListActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
-        recyclerView.adapter = SimpleItemRecyclerViewAdapter(this, DummyContent.ITEMS, twoPane)
+        recyclerView.adapter = SimpleItemRecyclerViewAdapter(
+            this,
+            DummyContent.ITEMS,
+            twoPane
+        )
     }
 
     class SimpleItemRecyclerViewAdapter(

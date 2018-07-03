@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".NewsListActivity"
+            android:name=".ui.NewsListActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -23,13 +23,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".NewsDetailActivity"
+            android:name=".ui.NewsDetailActivity"
             android:label="@string/title_news_detail"
-            android:parentActivityName=".NewsListActivity"
+            android:parentActivityName=".ui.NewsListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.sm.newsfeed.NewsListActivity" />
+                android:value="com.sm.newsfeed.ui.NewsListActivity" />
         </activity>
     </application>
 

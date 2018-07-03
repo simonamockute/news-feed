@@ -1,10 +1,11 @@
-package com.sm.newsfeed
+package com.sm.newsfeed.ui
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.sm.newsfeed.R
 import com.sm.newsfeed.dummy.DummyContent
 import kotlinx.android.synthetic.main.activity_news_detail.*
 import kotlinx.android.synthetic.main.news_detail.*

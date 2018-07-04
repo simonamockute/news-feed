@@ -6,5 +6,7 @@ data class NewsItem(
     val id: Int,
     val title: String,
     val imageLink: String,
-    val articleLink: String, @SerializedName("pub_date") val pubDate: String
+    val articleLink: String,
+    @SerializedName("post_age") val postAge: Long,
+    val source: String
 )

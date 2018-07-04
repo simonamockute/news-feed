@@ -1,18 +1,25 @@
 package com.sm.newsfeed.ui
 
+import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.sm.newsfeed.R
+import com.sm.newsfeed.dependencyinjection.NewsApplication
 import com.sm.newsfeed.dummy.DummyContent
+import com.sm.newsfeed.viewmodels.NewsViewModel
 import kotlinx.android.synthetic.main.activity_news_list.*
 import kotlinx.android.synthetic.main.news_list.*
 import kotlinx.android.synthetic.main.news_list_content.view.*
+import org.w3c.dom.Text
+import javax.inject.Inject
 
 /**
  * An activity representing a list of Pings. This activity
@@ -24,6 +31,9 @@ import kotlinx.android.synthetic.main.news_list_content.view.*
  */
 class NewsListActivity : AppCompatActivity() {
 
+    @Inject
+    lateinit var newsViewModel: NewsViewModel
+
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
@@ -32,6 +42,9 @@ class NewsListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        (application as NewsApplication).getApplicationComponent().inject(this)
+
         setContentView(R.layout.activity_news_list)
 
         setSupportActionBar(toolbar)
@@ -46,6 +59,8 @@ class NewsListActivity : AppCompatActivity() {
         }
 
         setupRecyclerView(news_list)
+
+        newsViewModel.getNews().observe(this, Observer { news -> Log.d("data", news?.joinToString()) })
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
@@ -95,8 +110,8 @@ class NewsListActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val item = values[position]
-            holder.idView.text = item.id
-            holder.contentView.text = item.content
+            holder.titleView.text = item.id
+            holder.timeAgoView.text = item.content
 
             with(holder.itemView) {
                 tag = item
@@ -107,8 +122,10 @@ class NewsListActivity : AppCompatActivity() {
         override fun getItemCount() = values.size
 
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val idView: TextView = view.id_text
-            val contentView: TextView = view.content
+            val titleView: TextView = view.titleText
+            val timeAgoView: TextView = view.timeAgoText
+            val imageView: ImageView = view.imageView
+            val sourceView: TextView = view.sourceText
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.sm.newsfeed.dependencyinjection
 
+import com.sm.newsfeed.ui.NewsListActivity
 import dagger.Component
 import javax.inject.Singleton
 
@@ -7,5 +8,5 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [AppModule::class, NetModule::class])
 interface NetComponent {
-//inject here
+    fun inject(activity: NewsListActivity)
 }

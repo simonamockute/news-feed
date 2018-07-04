@@ -11,6 +11,6 @@ import javax.inject.Singleton
 class NewsViewModel @Inject constructor(
     private val newsRepository: NewsRepository
 ) : ViewModel() {
-    fun getNews(query: String): MutableLiveData<Array<NewsItem>> =
+    fun getNews(): MutableLiveData<Array<NewsItem>> =
         newsRepository.getNews()
 }

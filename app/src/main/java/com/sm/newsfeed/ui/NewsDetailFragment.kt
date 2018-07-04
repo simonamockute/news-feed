@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
 import com.sm.newsfeed.R
-import com.sm.newsfeed.dummy.DummyContent
 import kotlinx.android.synthetic.main.activity_news_detail.*
 import kotlinx.android.synthetic.main.news_detail.*
 
@@ -22,18 +21,18 @@ class NewsDetailFragment : Fragment() {
     /**
      * The dummy content this fragment is presenting.
      */
-    private var item: DummyContent.DummyItem? = null
+    private var url: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         arguments?.let {
-            if (it.containsKey(ARG_ITEM_ID)) {
+            if (it.containsKey(ARG_ITEM_URL)) {
                 // Load the dummy content specified by the fragment
                 // arguments. In a real-world scenario, use a Loader
                 // to load content from a content provider.
-                item = DummyContent.ITEM_MAP[it.getString(ARG_ITEM_ID)]
-                activity?.toolbar_layout?.title = item?.content
+                url = it.getString(ARG_ITEM_URL)
+                activity?.toolbar_layout?.title = it.getString(ARG_ITEM_TITLE)
             }
         }
     }
@@ -50,9 +49,8 @@ class NewsDetailFragment : Fragment() {
 
         news_detail.webViewClient = WebViewClient()
 
-        item?.let {
-            news_detail.loadUrl("http://www.google.com")
-        }
+        news_detail.loadUrl(url)
+
     }
 
     companion object {
@@ -60,6 +58,7 @@ class NewsDetailFragment : Fragment() {
          * The fragment argument representing the item ID that this fragment
          * represents.
          */
-        const val ARG_ITEM_ID = "item_id"
+        const val ARG_ITEM_URL = "item_url"
+        const val ARG_ITEM_TITLE = "item_title"
     }
 }

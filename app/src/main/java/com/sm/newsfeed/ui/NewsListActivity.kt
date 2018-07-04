@@ -5,24 +5,23 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.sm.newsfeed.R
+import com.sm.newsfeed.dependencyinjection.GlideApp
 import com.sm.newsfeed.dependencyinjection.NewsApplication
-import com.sm.newsfeed.dummy.DummyContent
+import com.sm.newsfeed.remote.NewsItem
 import com.sm.newsfeed.viewmodels.NewsViewModel
 import kotlinx.android.synthetic.main.activity_news_list.*
 import kotlinx.android.synthetic.main.news_list.*
 import kotlinx.android.synthetic.main.news_list_content.view.*
-import org.w3c.dom.Text
 import javax.inject.Inject
 
 /**
- * An activity representing a list of Pings. This activity
+ * An activity representing a list of News. This activity
  * has different presentations for handset and tablet-size devices. On
  * handsets, the activity presents a list of items, which when touched,
  * lead to a [NewsDetailActivity] representing
@@ -58,22 +57,24 @@ class NewsListActivity : AppCompatActivity() {
             twoPane = true
         }
 
-        setupRecyclerView(news_list)
-
-        newsViewModel.getNews().observe(this, Observer { news -> Log.d("data", news?.joinToString()) })
+        newsViewModel.getNews().observe(this, Observer { news ->
+            if (news != null) {
+                setupRecyclerView(news_list, news)
+            }
+        })
     }
 
-    private fun setupRecyclerView(recyclerView: RecyclerView) {
+    private fun setupRecyclerView(recyclerView: RecyclerView, values: Array<NewsItem>) {
         recyclerView.adapter = SimpleItemRecyclerViewAdapter(
             this,
-            DummyContent.ITEMS,
+            values,
             twoPane
         )
     }
 
     class SimpleItemRecyclerViewAdapter(
         private val parentActivity: NewsListActivity,
-        private val values: List<DummyContent.DummyItem>,
+        private val values: Array<NewsItem>,
         private val twoPane: Boolean
     ) :
         RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder>() {
@@ -82,11 +83,12 @@ class NewsListActivity : AppCompatActivity() {
 
         init {
             onClickListener = View.OnClickListener { v ->
-                val item = v.tag as DummyContent.DummyItem
+                val item = v.tag as NewsItem
                 if (twoPane) {
                     val fragment = NewsDetailFragment().apply {
                         arguments = Bundle().apply {
-                            putString(NewsDetailFragment.ARG_ITEM_ID, item.id)
+                            putString(NewsDetailFragment.ARG_ITEM_URL, item.articleUrl)
+                            putString(NewsDetailFragment.ARG_ITEM_TITLE, item.title)
                         }
                     }
                     parentActivity.supportFragmentManager
@@ -95,7 +97,8 @@ class NewsListActivity : AppCompatActivity() {
                         .commit()
                 } else {
                     val intent = Intent(v.context, NewsDetailActivity::class.java).apply {
-                        putExtra(NewsDetailFragment.ARG_ITEM_ID, item.id)
+                        putExtra(NewsDetailFragment.ARG_ITEM_URL, item.articleUrl)
+                        putExtra(NewsDetailFragment.ARG_ITEM_TITLE, item.title)
                     }
                     v.context.startActivity(intent)
                 }
@@ -110,8 +113,10 @@ class NewsListActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val item = values[position]
-            holder.titleView.text = item.id
-            holder.timeAgoView.text = item.content
+            holder.titleView.text = item.title
+            holder.timeAgoView.text = item.postAge.toString() // TODO: convert to beautiful text
+            holder.sourceView.text = item.source
+            GlideApp.with(this.parentActivity).load(item.imageLink).fitCenter().into(holder.imageView)
 
             with(holder.itemView) {
                 tag = item

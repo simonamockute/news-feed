@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -113,10 +114,14 @@ class NewsListActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val item = values[position]
-            holder.titleView.text = item.title
-            holder.timeAgoView.text = item.postAge.toString() // TODO: convert to beautiful text
-            holder.sourceView.text = item.source
-            GlideApp.with(this.parentActivity).load(item.imageLink).fitCenter().into(holder.imageView)
+            holder.titleView.text = item.title //TODO: decode special characters
+
+            val timeMilis = System.currentTimeMillis() - item.postAge * 60
+            holder.timeAgoView.text = DateUtils.getRelativeTimeSpanString(timeMilis)
+
+            holder.sourceView.text = item.source //TODO: too long, what if .split("/")[1] ?
+            GlideApp.with(this.parentActivity).load(item.imageLink).fitCenter()
+                .into(holder.imageView)
 
             with(holder.itemView) {
                 tag = item

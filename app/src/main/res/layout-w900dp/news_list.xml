@@ -24,9 +24,8 @@
         android:name="com.sm.newsfeed.NewsListFragment"
         android:layout_width="@dimen/item_width"
         android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        app:layoutManager="LinearLayoutManager"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         tools:context="com.sm.newsfeed.ui.NewsListActivity"
         tools:listitem="@layout/news_list_content" />
 

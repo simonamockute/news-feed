@@ -27,7 +27,9 @@ class NewsRepository @Inject constructor(private val apiService: NewsService) {
                     call: Call<Array<NewsItem>>?,
                     response: Response<Array<NewsItem>>?
                 ) {
-                    forecast.value = response?.body()
+                    var newsList = response?.body()
+                    newsList?.sortBy { it.postAge }
+                    forecast.value = newsList
                 }
             })
         return forecast

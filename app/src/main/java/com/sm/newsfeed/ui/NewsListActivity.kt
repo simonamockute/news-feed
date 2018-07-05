@@ -4,6 +4,8 @@ import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.format.DateUtils
 import android.view.LayoutInflater
@@ -71,6 +73,15 @@ class NewsListActivity : AppCompatActivity() {
             values,
             twoPane
         )
+
+        val viewManager = LinearLayoutManager(this)
+        recyclerView.layoutManager  = viewManager
+
+        val dividerItemDecoration = DividerItemDecoration(
+            news_list.context,
+            viewManager.orientation
+        )
+        recyclerView.addItemDecoration(dividerItemDecoration)
     }
 
     class SimpleItemRecyclerViewAdapter(
@@ -114,14 +125,17 @@ class NewsListActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val item = values[position]
-            holder.titleView.text = item.title //TODO: decode special characters
+            holder.titleView.text = Decoder.fromHtml(item.title)
 
             val timeMilis = System.currentTimeMillis() - item.postAge * 60
             holder.timeAgoView.text = DateUtils.getRelativeTimeSpanString(timeMilis)
 
-            holder.sourceView.text = item.source //TODO: too long, what if .split("/")[1] ?
-            GlideApp.with(this.parentActivity).load(item.imageLink).fitCenter()
-                .into(holder.imageView)
+            holder.sourceView.text = item.source
+
+            if (!item.imageLink.isEmpty()) {
+                GlideApp.with(this.parentActivity).load(item.imageLink).fitCenter()
+                    .into(holder.imageView)
+            }
 
             with(holder.itemView) {
                 tag = item

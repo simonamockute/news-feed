@@ -30,7 +30,7 @@ class NewsDetailFragment : Fragment() {
             if (it.containsKey(ARG_ITEM_URL)) {
                 url = it.getString(ARG_ITEM_URL)
 
-                val currentActivity = activity as AppCompatActivity
+                val currentActivity = activity as AppCompatActivity?
                 currentActivity?.supportActionBar?.title = it.getString(ARG_ITEM_TITLE)
             }
         }

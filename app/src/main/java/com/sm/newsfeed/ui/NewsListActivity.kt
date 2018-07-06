@@ -9,10 +9,11 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.*
+import android.view.MenuItem
 import com.sm.newsfeed.R
 import com.sm.newsfeed.dependencyinjection.NewsApplication
 import com.sm.newsfeed.models.NewsItem
+import com.sm.newsfeed.remote.NewsCategory
 import com.sm.newsfeed.viewmodels.NewsViewModel
 import kotlinx.android.synthetic.main.activity_navigation_drawer.*
 import kotlinx.android.synthetic.main.app_bar_navigation_drawer.*
@@ -27,7 +28,7 @@ import javax.inject.Inject
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-class NewsListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener  {
+class NewsListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     @Inject
     lateinit var newsViewModel: NewsViewModel
@@ -68,19 +69,25 @@ class NewsListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        addNavigationItems()
-
         newsViewModel.getNews().observe(this, Observer { news ->
             if (news != null) {
                 setupRecyclerView(news_list, news)
             }
         })
+
+        newsViewModel.getCategories().observe(this, Observer { categories ->
+            if (categories != null) {
+                addNavigationItems(categories)
+            }
+        })
     }
 
-    private fun addNavigationItems() {
-        nav_view.menu.add(0, 1,1, "Category1")
-        nav_view.menu.add(0, 2, 2,"Category2")
-        nav_view.menu.add(0, 3, 3,"Category3")
+    private fun addNavigationItems(categories: Array<NewsCategory>) {
+        nav_view.menu.clear()
+
+        for ((index, category) in categories.withIndex()) {
+            nav_view.menu.add(0, index, index, category.title)
+        }
 
         nav_view.menu.setGroupCheckable(0, true, true)
 

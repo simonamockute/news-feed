@@ -69,13 +69,13 @@ class NewsListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        newsViewModel.getNews().observe(this, Observer { news ->
+        newsViewModel.news.observe(this, Observer { news ->
             if (news != null) {
                 setupRecyclerView(news_list, news)
             }
         })
 
-        newsViewModel.getCategories().observe(this, Observer { categories ->
+        newsViewModel.categories.observe(this, Observer { categories ->
             if (categories != null) {
                 addNavigationItems(categories)
             }
@@ -104,9 +104,8 @@ class NewsListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
-        when (item.itemId) {
-
-        }
+        var currentCategoryCode = newsViewModel.categories.value!![item.itemId].code
+        newsViewModel.selectedCategory.value = currentCategoryCode
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true

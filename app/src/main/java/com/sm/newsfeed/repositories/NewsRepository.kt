@@ -41,8 +41,8 @@ class NewsRepository @Inject constructor(
         return categories
     }
 
-    fun getNews(): MutableLiveData<Array<NewsItem>> {
-        newsService.getNews()
+    fun getNews(category: String): MutableLiveData<Array<NewsItem>> {
+        newsService.getNews(category)
             .enqueue(object : Callback<Array<NewsResponseItem>> {
                 override fun onFailure(call: Call<Array<NewsResponseItem>>?, t: Throwable?) {
                     if (t != null) {

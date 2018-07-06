@@ -1,6 +1,8 @@
 package com.sm.newsfeed.viewmodels
 
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
 import com.sm.newsfeed.models.NewsItem
 import com.sm.newsfeed.remote.NewsCategory
@@ -12,9 +14,16 @@ import javax.inject.Singleton
 class NewsViewModel @Inject constructor(
     private val newsRepository: NewsRepository
 ) : ViewModel() {
-    fun getCategories(): MutableLiveData<Array<NewsCategory>> =
-        newsRepository.getCategories()
+    val selectedCategory = MutableLiveData<String>()
+    val categories: MutableLiveData<Array<NewsCategory>>
 
-    fun getNews(): MutableLiveData<Array<NewsItem>> =
-        newsRepository.getNews()
+    init {
+        selectedCategory.value = "featured"
+        categories = newsRepository.getCategories()
+    }
+
+    val news: LiveData<Array<NewsItem>> =
+        Transformations.switchMap(selectedCategory) { category ->
+            newsRepository.getNews(category)
+        }
 }

@@ -5,7 +5,6 @@ import android.text.format.DateUtils
 import com.sm.newsfeed.models.NewsItem
 import com.sm.newsfeed.remote.NewsResponseItem
 import com.sm.newsfeed.remote.NewsService
-import com.sm.newsfeed.ui.Decoder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

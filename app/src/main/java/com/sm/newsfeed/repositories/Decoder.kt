@@ -1,4 +1,4 @@
-package com.sm.newsfeed.ui
+package com.sm.newsfeed.repositories
 
 import android.os.Build
 import android.text.Html

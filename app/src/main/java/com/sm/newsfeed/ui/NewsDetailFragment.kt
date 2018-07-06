@@ -2,12 +2,12 @@ package com.sm.newsfeed.ui
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
 import com.sm.newsfeed.R
-import kotlinx.android.synthetic.main.activity_news_detail.*
 import kotlinx.android.synthetic.main.news_detail.*
 
 /**
@@ -28,11 +28,10 @@ class NewsDetailFragment : Fragment() {
 
         arguments?.let {
             if (it.containsKey(ARG_ITEM_URL)) {
-                // Load the dummy content specified by the fragment
-                // arguments. In a real-world scenario, use a Loader
-                // to load content from a content provider.
                 url = it.getString(ARG_ITEM_URL)
-                activity?.toolbar_layout?.title = it.getString(ARG_ITEM_TITLE)
+
+                val currentActivity = activity as AppCompatActivity
+                currentActivity?.supportActionBar?.title = it.getString(ARG_ITEM_TITLE)
             }
         }
     }
@@ -48,6 +47,10 @@ class NewsDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         news_detail.webViewClient = WebViewClient()
+
+        //enabling JavaScript so pages would load correctly and fully
+        //otherwise articles with photo galleries mess up while loading
+        news_detail.settings.javaScriptEnabled = true
 
         news_detail.loadUrl(url)
 

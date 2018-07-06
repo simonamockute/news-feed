@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,7 @@ import android.widget.TextView
 import com.sm.newsfeed.R
 import com.sm.newsfeed.dependencyinjection.GlideApp
 import com.sm.newsfeed.dependencyinjection.NewsApplication
-import com.sm.newsfeed.remote.NewsItem
+import com.sm.newsfeed.models.NewsItem
 import com.sm.newsfeed.viewmodels.NewsViewModel
 import kotlinx.android.synthetic.main.activity_news_list.*
 import kotlinx.android.synthetic.main.news_list.*
@@ -75,7 +74,7 @@ class NewsListActivity : AppCompatActivity() {
         )
 
         val viewManager = LinearLayoutManager(this)
-        recyclerView.layoutManager  = viewManager
+        recyclerView.layoutManager = viewManager
 
         val dividerItemDecoration = DividerItemDecoration(
             news_list.context,
@@ -125,11 +124,8 @@ class NewsListActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val item = values[position]
-            holder.titleView.text = Decoder.fromHtml(item.title)
-
-            val timeMilis = System.currentTimeMillis() - item.postAge * 60
-            holder.timeAgoView.text = DateUtils.getRelativeTimeSpanString(timeMilis)
-
+            holder.titleView.text = item.title
+            holder.timeAgoView.text = item.postAge
             holder.sourceView.text = item.source
 
             if (!item.imageLink.isEmpty()) {

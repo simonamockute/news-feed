@@ -2,7 +2,7 @@ package com.sm.newsfeed.remote
 
 import com.google.gson.annotations.SerializedName
 
-data class NewsItem(
+data class NewsResponseItem(
     val id: Int,
     val title: String,
     val imageLink: String,

@@ -1,7 +1,7 @@
 package com.sm.newsfeed.ui
 
-import android.text.Html
 import android.os.Build
+import android.text.Html
 import android.text.Spanned
 
 class Decoder {

@@ -27,7 +27,6 @@ class NetModule {
     @Singleton
     fun provideHttpCache(application: Application): Cache {
         val cacheSize = 10 * 1024 * 1024L
-        val cache = Cache(application.cacheDir, cacheSize)
         return Cache(application.cacheDir, cacheSize)
     }
 

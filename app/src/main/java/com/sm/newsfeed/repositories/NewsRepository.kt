@@ -35,7 +35,7 @@ class NewsRepository @Inject constructor(
                     call: Call<Array<NewsCategory>>?,
                     response: Response<Array<NewsCategory>>?
                 ) {
-                    categories.value = response?.body()
+                    categories.value = response?.body()?.filter { it.enabled }?.toTypedArray()
                 }
             })
         return categories

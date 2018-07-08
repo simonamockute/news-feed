@@ -47,7 +47,6 @@ class NewsListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         setContentView(R.layout.activity_navigation_drawer)
 
         setSupportActionBar(toolbar)
-        toolbar.title = title
 
         if (news_detail_container != null) {
             // The detail container view will be present only in the
@@ -85,8 +84,16 @@ class NewsListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     private fun addNavigationItems(categories: Array<NewsCategory>) {
         nav_view.menu.clear()
 
+        var selectedCategory = newsViewModel.selectedCategory.value
+
         for ((index, category) in categories.withIndex()) {
-            nav_view.menu.add(0, index, index, category.title)
+            var menuItem = nav_view.menu.add(0, index, index, category.title)
+
+            //set default category
+            if (category.code == selectedCategory) {
+                menuItem.isChecked = true
+                toolbar.title = category.title
+            }
         }
 
         nav_view.menu.setGroupCheckable(0, true, true)
@@ -104,8 +111,10 @@ class NewsListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
-        var currentCategoryCode = newsViewModel.categories.value!![item.itemId].code
-        newsViewModel.selectedCategory.value = currentCategoryCode
+        var currentCategory = newsViewModel.categories.value!![item.itemId]
+        newsViewModel.selectedCategory.value = currentCategory.code
+
+        toolbar.title = currentCategory.title
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true

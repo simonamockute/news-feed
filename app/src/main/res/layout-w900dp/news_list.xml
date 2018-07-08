@@ -29,6 +29,15 @@
         tools:context="com.sm.newsfeed.ui.NewsListActivity"
         tools:listitem="@layout/news_list_content" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:textAppearance="?attr/textAppearanceSearchResultTitle"
+        android:id="@+id/empty"
+        android:text="@string/empty_list"
+        android:visibility="gone"/>
+
     <FrameLayout
         android:id="@+id/news_detail_container"
         android:layout_width="0dp"

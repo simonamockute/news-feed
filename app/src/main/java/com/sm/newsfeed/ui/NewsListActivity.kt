@@ -70,7 +70,7 @@ class NewsListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         newsViewModel.news.observe(this, Observer { news ->
             if (news != null) {
-                setupRecyclerView(news_list, news)
+                updateRecyclerViewData(news_list, news)
             }
         })
 
@@ -79,6 +79,19 @@ class NewsListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 addNavigationItems(categories)
             }
         })
+
+        setupRecyclerView()
+    }
+
+    private fun setupRecyclerView() {
+        val viewManager = LinearLayoutManager(this)
+        news_list.layoutManager = viewManager
+
+        val dividerItemDecoration = DividerItemDecoration(
+            news_list.context,
+            viewManager.orientation
+        )
+        news_list.addItemDecoration(dividerItemDecoration)
     }
 
     private fun addNavigationItems(categories: Array<NewsCategory>) {
@@ -120,20 +133,15 @@ class NewsListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         return true
     }
 
-    private fun setupRecyclerView(recyclerView: RecyclerView, values: Array<NewsItem>) {
+    private fun updateRecyclerViewData(recyclerView: RecyclerView, values: Array<NewsItem>) {
         recyclerView.adapter = SimpleItemRecyclerViewAdapter(
             this,
             values,
             twoPane
         )
 
-        val viewManager = LinearLayoutManager(this)
-        recyclerView.layoutManager = viewManager
-
-        val dividerItemDecoration = DividerItemDecoration(
-            news_list.context,
-            viewManager.orientation
-        )
-        recyclerView.addItemDecoration(dividerItemDecoration)
+        val adapterDataObserver = RecyclerViewEmptySupportObserver(news_list, empty)
+        news_list.adapter.registerAdapterDataObserver(adapterDataObserver)
+        adapterDataObserver.updateEmptyViewVisibility()
     }
 }

@@ -20,6 +20,5 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:text="@string/empty_list"
-        android:textAppearance="?attr/textAppearanceSearchResultTitle"
-        android:visibility="gone" />
+        android:textAppearance="?attr/textAppearanceSearchResultTitle" />
 </FrameLayout>

@@ -35,8 +35,7 @@
         android:layout_gravity="center"
         android:textAppearance="?attr/textAppearanceSearchResultTitle"
         android:id="@+id/empty"
-        android:text="@string/empty_list"
-        android:visibility="gone"/>
+        android:text="@string/empty_list" />
 
     <FrameLayout
         android:id="@+id/news_detail_container"

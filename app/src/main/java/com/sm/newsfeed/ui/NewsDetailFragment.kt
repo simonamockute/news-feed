@@ -18,9 +18,6 @@ import kotlinx.android.synthetic.main.news_detail.*
  */
 class NewsDetailFragment : Fragment() {
 
-    /**
-     * The dummy content this fragment is presenting.
-     */
     private var url: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

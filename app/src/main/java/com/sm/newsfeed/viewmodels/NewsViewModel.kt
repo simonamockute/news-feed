@@ -17,6 +17,8 @@ class NewsViewModel @Inject constructor(
     val selectedCategory = MutableLiveData<String>()
     val categories: MutableLiveData<Array<NewsCategory>>
 
+    val error = newsRepository.error
+
     init {
         selectedCategory.value = "featured"
         categories = newsRepository.getCategories()

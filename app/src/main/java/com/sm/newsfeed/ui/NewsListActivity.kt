@@ -3,6 +3,7 @@ package com.sm.newsfeed.ui
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -80,6 +81,8 @@ class NewsListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             }
         })
 
+        newsViewModel.error.observe(this, Observer { error -> showError(error) })
+
         setupRecyclerView()
     }
 
@@ -105,13 +108,22 @@ class NewsListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             //set default category
             if (category.code == selectedCategory) {
                 menuItem.isChecked = true
-                toolbar.title = category.title
+                supportActionBar?.title = category.title
             }
         }
 
         nav_view.menu.setGroupCheckable(0, true, true)
 
         nav_view.invalidate()
+    }
+
+    private fun showError(error: String?) {
+        // Showing the error that is returned while trying to get data.
+        // Next would be checking if internet connection is working and if not - show
+        // more user friendly error with what user could do (e.g. please turn on internet)
+        if (error != null) {
+            Snackbar.make(drawer_layout, error, Snackbar.LENGTH_LONG).show()
+        }
     }
 
     override fun onBackPressed() {
